@@ -2,10 +2,10 @@
 
 서울의 실시간 밀집도를 분석하여 가장 핫한 곳과 가장 여유로운 곳을 보여줍니다.
 
-## 🔥 인싸용: 지금 가장 HOT한 10곳
+## 🔥 TOP 10 HOT PLACES
 ![Hot Map](./hot_map.png)
 
-## 🌲 아싸용: 지금 가장 한적한 10곳
+## 🌲 Top 10 Chill Places
 ![Chill Map](./chill_map.png)
 
 ---
