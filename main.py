@@ -112,17 +112,28 @@ def main():
         draw_map(chill_10, "seoul_chill.png", False)
 
 def update_readme():
+    # 한국 시간 설정 (UTC+9)
     now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
     time_str = now.strftime("%Y-%m-%d %H:%M:%S")
     
-    with open("README.md", "r", encoding="utf-8") as f:
-        content = f.readlines()
-    
-    # README 상단이나 특정 위치에 시간 기록
-    with open("README.md", "w", encoding="utf-8") as f:
-        f.write(f"## 🕒 마지막 업데이트: {time_str} (KST)\n")
-        f.writelines(content[1:]) # 기존 내용 이어 붙이기
+    try:
+        # 1. 기존 리드미 내용 읽기
+        with open("README.md", "r", encoding="utf-8") as f:
+            lines = f.readlines()
+        
+        # 2. 마지막 줄 업데이트
+        # lines[-1]은 파일의 가장 마지막 줄을 의미합니다.
+        lines[-1] = f"마지막 업데이트: {time_str} (KST)"
+        
+        # 3. 다시 쓰기
+        with open("README.md", "w", encoding="utf-8") as f:
+            f.writelines(lines)
+            
+        print(f"✅ README 업데이트 완료: {time_str}")
+    except Exception as e:
+        print(f"❌ README 업데이트 실패: {e}")
 
 if __name__ == "__main__":
-    main()
-    update_readme() # 매 실행 시 README 시간 갱신
+    # 데이터 수집 및 지도 생성 로직...
+    main() 
+    update_readme()
