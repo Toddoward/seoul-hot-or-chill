@@ -1,0 +1,40 @@
+name: Seoul Hot or Chill Update
+
+on:
+  schedule:
+    - cron: '*/10 * * * *' # 매시간 정각에 실행
+  workflow_dispatch: # 수동 실행 버튼 활성화
+
+permissions:
+  contents: write # 봇이 지도 이미지와 README를 수정할 수 있게 권한 부여
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests python-dotenv
+
+      - name: Run script
+        env:
+          SEOUL_API_KEY: ${{ secrets.SEOUL_API_KEY }}
+          MAP_API_KEY: ${{ secrets.MAP_API_KEY }}
+        run: python main.py
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Update Hot/Chill maps and data" || echo "No changes to commit"
+          git push
